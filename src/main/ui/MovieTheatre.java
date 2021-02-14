@@ -104,7 +104,7 @@ public class MovieTheatre {
         System.out.println("Current tickets are :" + userAcc.getTickets());
     }
 
-    //TODO set the display movies choose a movie, set the choose timing, choose seats
+
     private void setBookCommand() {
 
 
@@ -122,7 +122,7 @@ public class MovieTheatre {
         }
     }
 
-    //TODO just for testing, delete later
+
     private void addMore() {
         List<String> seats = new ArrayList<>();
         seats.add("3");
