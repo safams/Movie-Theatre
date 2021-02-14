@@ -1,12 +1,8 @@
 package ui;
 
-import com.sun.tools.javac.comp.Todo;
-import com.sun.xml.internal.bind.v2.TODO;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import model.Movie;
 import model.Account;
 import model.Ticket;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
