@@ -3,8 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Class to create a Movie object, with methods to add timings and seats to a movie,
+// and getters to retrieve the movie name and timing and seats
 public class Movie {
-
 
     private String movieName;
     private List<String> seats;
@@ -40,13 +41,8 @@ public class Movie {
         return timings;
     }
 
-
-    //method to add seats to movie DONE
-    //method to add timings to movie DONE
-    //method to remove seats from movie DONE
-    //method to remove timings from movie DONE
-    //method to return seats DONE
-    //method to return timings DONE
-
+    public String getMovieName() {
+        return movieName;
+    }
 
 }

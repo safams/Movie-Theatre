@@ -10,9 +10,4 @@ public class Main {
 
 
     }
-
-
-    //movie1 = new Movie (Jumanji)
-    //initializem1(movie1)
-
 }

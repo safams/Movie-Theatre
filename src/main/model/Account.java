@@ -4,6 +4,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// creates an instantiation of the user's Account, has getters for the Account's
+//balance, saved list of tickets, and options to add more tickets or add to balance
 public class Account {
 
     private int balance;
@@ -19,6 +21,10 @@ public class Account {
 
     public int getInitialBalance() {
         return INITIAL_BALANCE;
+    }
+
+    public int getMoviePrice() {
+        return MOVIE_PRICE;
     }
 
 

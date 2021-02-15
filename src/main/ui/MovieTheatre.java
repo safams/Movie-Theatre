@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+// UI class to handle the initialization of all data, and commands to run for each user input
 public class MovieTheatre {
 
     private static final String VIEW_COMMAND = "view";
@@ -17,6 +18,10 @@ public class MovieTheatre {
     private static final String RELOAD_COMMAND = "reload";
     private static final String QUIT_COMMAND = "quit";
     private static final String GO_BACK_COMMAND = "back";
+
+    Movie movie1 = new Movie("Jumanji");
+    Movie movie2 = new Movie("Avengers");
+    Movie movie3 = new Movie("Interstellar");
 
     private Scanner input;
     private boolean run;
@@ -40,7 +45,8 @@ public class MovieTheatre {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("quit")) {
+            if (command.equals(QUIT_COMMAND)) {
+                System.out.println("Thank you for using our service!");
                 keepGoing = false;
             } else {
                 commandOptions(command);
@@ -51,11 +57,10 @@ public class MovieTheatre {
     private void printInstructions() {
         System.out.println("\nMenu:");
         System.out.println("\tview   - to view balance and bookings");
-        System.out.println("\tcancel - to cancel a booking");
-        System.out.println("\tbook   - to book a new ticket");
         System.out.println("\treload - to reload account balance");
+        System.out.println("\tbook   - to book a new ticket");
+        System.out.println("\tcancel - to cancel a booking");
         System.out.println("\tquit   - to quit the program");
-        System.out.println("\tback   - to go back at any time");
     }
 
     private void commandOptions(String command) {
@@ -64,16 +69,13 @@ public class MovieTheatre {
                 setReloadCommand();
                 break;
             case BOOK_COMMAND:
-                addMore();
+                setBookCommand();
                 break;
             case CANCEL_COMMAND:
                 setCancelCommand();
                 break;
             case VIEW_COMMAND:
                 setViewCommand();
-                break;
-            case GO_BACK_COMMAND:
-                printInstructions();
                 break;
             default:
                 System.out.println("Selection not valid....");
@@ -83,6 +85,7 @@ public class MovieTheatre {
 
     private void setReloadCommand() {
         System.out.println("Current balance is: $" + userAcc.getBalance());
+        System.out.println("Current movie ticket price/seat is: $" + userAcc.getMoviePrice());
         System.out.println("Enter dollar amount to load into your account: $ ");
         Integer amount = input.nextInt();
 
@@ -92,57 +95,99 @@ public class MovieTheatre {
         } else {
             System.out.println("Negative amount is invalid");
         }
-
     }
 
     private void setViewCommand() {
         System.out.println("Current balance is: $" + userAcc.getBalance());
-        System.out.println("Current tickets are :" + userAcc.getTickets());
-    }
-
-
-    private void setBookCommand() {
-
-
-    }
-
-    private void setCancelCommand() {
-        System.out.println("Type out the name of the movie you wish to delete a booking for:");
-        String command = input.next();
-
-        for (Ticket ticket : userAcc.getTickets()) {
-            if (command.equals(ticket.getName())) {
-                userAcc.deleteTicket(ticket);
-                break;
-            }
+        if (userAcc.getTickets().isEmpty()) {
+            System.out.println("Sorry, no current tickets booked");
+        } else {
+            System.out.println("Current tickets are :" + userAcc.getTickets());
         }
     }
 
 
-    private void addMore() {
-        List<String> seats = new ArrayList<>();
-        seats.add("3");
-        Ticket ticket = new Ticket("Safa", seats, 3);
-        Ticket ticket2 = new Ticket("Sara", seats, 7);
-        userAcc.addTicket(ticket2);
-        userAcc.addTicket(ticket);
+    private void setBookCommand() {
+        System.out.println("Type the movie name you'd like to book");
+        printMovies();
+        String selection = input.next();
+        if (selection.equals("Jumanji")) {
+            printTiming(movie1);
+        } else if (selection.equals("Avengers")) {
+            printTiming(movie2);
+        } else if (selection.equals("Interstellar")) {
+            printTiming(movie3);
+        } else {
+            System.out.println("Selection not valid");
+        }
+
+    }
+
+    private void printMovies() {
+        System.out.println(movie1.getMovieName());
+        System.out.println(movie2.getMovieName());
+        System.out.println(movie3.getMovieName());
+    }
+
+    private void printTiming(Movie movie) {
+        System.out.println(movie.getTimings());
+        System.out.println("Type in the timing you'd like");
+        Integer selection = input.nextInt();
+        if (movie.getTimings().contains(selection)) {
+            movie.removeTimings(selection);
+            printSeatChart(movie, selection);
+        } else {
+            System.out.println("Selection is invalid");
+        }
+
+    }
+
+    private void printSeatChart(Movie movie, Integer timing) {
+        System.out.println(movie.getSeats());
+        System.out.println("Type in the seat you'd like");
+        String selection = input.next();
+        List<String> seatSelections = new ArrayList<>();
+        int n = 0;
+        while (movie.getSeats().contains(selection)) {
+            seatSelections.add(selection);
+            movie.removeSeats(selection);
+            System.out.println("Type in another seat to buy, or type exit to finish purchase");
+            selection = input.next();
+            n++;
+        }
+        if (selection.equals("exit")) {
+            finishPurchase(n, movie.getMovieName(), seatSelections, timing);
+        }
+    }
+
+    private void finishPurchase(Integer n, String movieName, List<String> seats, Integer timing) {
+        Integer balance = userAcc.getBalance();
+        if (balance >= (n * userAcc.getMoviePrice())) {
+            userAcc.buyTicket(n);
+            Ticket ticket = new Ticket(movieName, seats, timing);
+            userAcc.addTicket(ticket);
+            System.out.println(ticket);
+            System.out.println("Purchase successful!");
+        } else {
+            System.out.println("Insufficient funds, reload account.");
+        }
     }
 
 
+    private void setCancelCommand() {
+        System.out.println("Type out the name of the movie you wish to delete a booking for:");
+        String command = input.next();
+        for (Ticket ticket : userAcc.getTickets()) {
+            if (command.equals(ticket.getName())) {
+                userAcc.deleteTicket(ticket);
+                System.out.println("Successfully cancelled booking!");
+                break;
+            } else {
+                System.out.println("Sorry, that ticket is invalid");
+            }
+        }
+    }
 
-//print intstructions DONE
-
-//print BookedMovies
-
-//return balance
-
-//printBooked Movies names
-
-//printMovietitle list
-
-//print Timings
-
-//print SeatChart
 
 
     public void initializeMovie1(Movie m1) {
@@ -201,9 +246,6 @@ public class MovieTheatre {
     }
 
     public void initializeMovies() {
-        Movie movie1 = new Movie("Jumanji");
-        Movie movie2 = new Movie("Avengers");
-        Movie movie3 = new Movie("Choco Milk");
         initializeMovie1(movie1);
         initializeMovie2(movie2);
         initializeMovie3(movie3);

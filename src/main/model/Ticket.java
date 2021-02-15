@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
+// Class to construct a Ticket object, and getters to access the ticket's information
 
 public class Ticket {
 
@@ -25,19 +25,9 @@ public class Ticket {
         return name;
     }
 
-    public List<String> getSeats() {
-        return seats;
-    }
-
-    public Integer getTime() {
-        return time;
-    }
-
-
-
     @Override
     public String toString() {
-        return "\nName: " + name + " Seats: " + seats + " Time: " + time;
+        return "\nName: " + name + " | Seats: " + seats + " | Time: " + time;
     }
 
 
