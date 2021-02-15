@@ -5,12 +5,6 @@ import java.util.List;
 
 public class Ticket {
 
-    //constructor to make a ticket with seat(s), movie name, movie time
-    //add ticket to account's list of tickets
-    //add a name DONE
-    //add a seat DONE
-    //add a time
-
     private String name;
     private List<String> seats;
     private Integer time;
@@ -25,6 +19,7 @@ public class Ticket {
         return name;
     }
 
+    //EFFECTS: overrides Java's toSTring method, prints out a Ticket
     @Override
     public String toString() {
         return "\nName: " + name + " | Seats: " + seats + " | Time: " + time;

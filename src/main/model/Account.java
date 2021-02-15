@@ -28,6 +28,9 @@ public class Account {
     }
 
 
+    //REQUIRES: money >= 0
+    //MODIFIES: this
+    //EFFECTS: adds dollar amount to Accounts current balance
     public void reload(int money) {
         this.balance = getBalance() + money;
 
@@ -38,6 +41,10 @@ public class Account {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: if there is sufficient balance,
+    //         subtracts price from balance and returns true,
+    //         else returns false
     public boolean buyTicket(Integer numSeats) {
         int purchase = numSeats * MOVIE_PRICE;
         if (getBalance() >= purchase) {
@@ -53,24 +60,18 @@ public class Account {
     }
 
     //REQUIRES: list !=null
+    //MODIFIES: this
+    //EFFECTS: removes ticket from saved ticket list
     public void deleteTicket(Ticket ticket) {
         tickets.remove(ticket);
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: adds ticket to saved ticket list
+
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
     }
-
-
-
-
-    //set initial balance to 500 DONE
-    //method to reload money DONE
-    //method to return the balance DONE
-    //method to deduct price from balance DONE
-    //method to return list of tickets DONE
-    //method to delete ticket from list of tickets DONE
-    //method to add ticket to list of tickets DONE
-
 
 }
