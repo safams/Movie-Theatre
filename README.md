@@ -30,3 +30,7 @@ interactive I can make this, where the options keep expanding as you choose a mo
 
 * *As a user*, I want to be able to **delete** a booked ticket from my list of booked tickets
 
+* *As a user*, I want to be able to **save** my current booked movie tickets to file
+
+* *As a user*, I want to be able to **reload** my current booked movie tickets from file and add/remove tickets if desired
+

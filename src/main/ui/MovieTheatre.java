@@ -19,7 +19,6 @@ public class MovieTheatre {
     private static final String QUIT_COMMAND = "quit";
 
     private Scanner input;
-    private boolean run;
     private Account userAcc;
 
     //EFFECTS: runs the movie theatre application
@@ -183,7 +182,10 @@ public class MovieTheatre {
             userAcc.buyTicket(n);
             Ticket ticket = new Ticket(movieName, seats, timing);
             userAcc.addTicket(ticket);
+            System.out.println("***************************************************");
             System.out.println(ticket);
+            System.out.println(" ");
+            System.out.println("***************************************************");
             System.out.println("Purchase successful!");
         } else {
             System.out.println("Insufficient funds, reload account.");
@@ -211,7 +213,8 @@ public class MovieTheatre {
         }
     }
 
-
+//todo re-add deleted movies
+    //todo sold out movies
 
     //MODIFIES: this
     //EFFECTS: initializes movie 1
