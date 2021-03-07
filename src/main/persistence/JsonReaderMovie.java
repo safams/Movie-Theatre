@@ -1,8 +1,6 @@
 package persistence;
 
-import model.Account;
 import model.Movie;
-import model.Ticket;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

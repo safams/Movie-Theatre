@@ -1,8 +1,6 @@
 package persistence;
 
-import com.sun.tools.javac.util.List;
 import model.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 

@@ -1,7 +1,6 @@
 package persistence;
 
 import model.Account;
-import model.Movie;
 import model.Ticket;
 
 import java.io.IOException;
