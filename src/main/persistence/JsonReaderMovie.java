@@ -41,12 +41,11 @@ public class JsonReaderMovie {
 
     private List<Movie> parseMovie(JSONObject jsonObject) {
 
-
         JSONArray movieJsonList = jsonObject.getJSONArray("name");
-        String name1 = null;
+        String name = null;
         for (Object j : movieJsonList) {
             JSONObject json = (JSONObject) j;
-            String name = json.getString("movie name:");
+            name = json.getString("movie name:");
 
             JSONArray seats1 = json.getJSONArray("seat list timing 1:");
             List<String> seatList1 = new ArrayList<>();
@@ -67,10 +66,9 @@ public class JsonReaderMovie {
                 timings.add(Integer.parseInt(time));
             }
 
-            name1 = name;
 
         }
-        return jsonArray(jsonObject, name1);
+        return jsonArray(jsonObject, name);
     }
 
     private List<Movie> jsonArray(JSONObject jsonObject, String name) {
