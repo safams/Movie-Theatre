@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 // Class to construct a Ticket object, and getters to access the ticket's information
 
+
 public class Ticket implements Writable {
 
     private String name;
     private List<String> seats;
     private Integer time;
 
+    // EFFECTS: constructs a booked ticket with a name, list of seats, and time
     public Ticket(String name, List<String> seatList, Integer time) {
         this.name = name;
         seats = seatList;
@@ -32,11 +34,8 @@ public class Ticket implements Writable {
         return time;
     }
 
-//    @Override
-//    public String toString() {
-//        return "\nName: " + getName() + " | Seats: " + getSeats() + " | Time: " + getTime();
-//    }
 
+    // code base from JsonSerializationDemo project
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -46,6 +45,7 @@ public class Ticket implements Writable {
         return json;
     }
 
+    // code base from JsonSerializationDemo project
     public JSONArray seatsToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -18,14 +18,12 @@ public class Account implements Writable {
     private List<Ticket> tickets;
 
 
+    // EFFECTS: constructs an account with a balance and list of tickets
     public Account(int initialBalance) {
         balance = initialBalance;
         tickets = new ArrayList<>();
     }
 
-//    public int getInitialBalance() {
-//        return INITIAL_BALANCE;
-//    }
 
     public int getMoviePrice() {
         return MOVIE_PRICE;
@@ -79,6 +77,7 @@ public class Account implements Writable {
         tickets.add(ticket);
     }
 
+    // code base from JsonSerializationDemo project
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -87,6 +86,7 @@ public class Account implements Writable {
         return json;
     }
 
+    // code base from JsonSerializationDemo project
     private JSONArray ticketsToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -12,15 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads movie from JSON data stored in file
+// code from JsonSerializationDemo project
 public class JsonReaderMovie {
     private String source;
 
+    // EFFECTS: constructs reader to read from source file
     public JsonReaderMovie(String source) {
         this.source = source;
     }
 
-
+    // EFFECTS: reads movie from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public List<Movie> readMovie() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -39,6 +42,8 @@ public class JsonReaderMovie {
     }
 
 
+    // EFFECTS: parses movie list from JSON object and returns it, in the process parses timings and seats from
+    //          JSON object and adds them to each movie in movielist
     private List<Movie> parseMovie(JSONObject jsonObject) {
 
         JSONArray movieJsonList = jsonObject.getJSONArray("name");
@@ -71,12 +76,12 @@ public class JsonReaderMovie {
         return jsonArray(jsonObject, name);
     }
 
+    // EFFECTS: adds movies to movie list in JSON Object
     private List<Movie> jsonArray(JSONObject jsonObject, String name) {
         List<Movie> movies = new ArrayList<>();
         Movie mov = new Movie(name);
         movies.add(mov);
 
         return movies;
-
     }
 }

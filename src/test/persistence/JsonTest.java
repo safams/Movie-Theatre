@@ -12,4 +12,11 @@ public class JsonTest {
         assertEquals(seats, ticket.getSeats());
         assertEquals(time, ticket.getTime());
     }
+
+    protected void checkMovie(String movieName, List seats1, List seats2, List time, Movie movie) {
+        assertEquals(movieName, movie.getMovieName());
+        assertEquals(seats1, movie.getSeats1());
+        assertEquals(seats2, movie.getSeats2());
+        assertEquals(time, movie.getTimings());
+    }
 }

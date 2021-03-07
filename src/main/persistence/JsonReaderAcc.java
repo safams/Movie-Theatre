@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads Account from JSON data stored in file
 public class JsonReaderAcc {
     private String source;
 
@@ -21,7 +21,7 @@ public class JsonReaderAcc {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads account from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Account readAccount() throws IOException {
         String jsonData = readFile(source);
@@ -29,11 +29,6 @@ public class JsonReaderAcc {
         return parseAccount(jsonObject);
     }
 
-//    public Movie readMovie() throws IOException {
-//        String jsonData = readFile(source);
-//        JSONObject jsonObject = new JSONObject(jsonData);
-//        return parseMovie(jsonObject);
-//    }
 
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
@@ -46,7 +41,7 @@ public class JsonReaderAcc {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses account from JSON object and returns it
     private Account parseAccount(JSONObject jsonObject) {
         int balance = jsonObject.getInt("balance");
         Account acc = new Account(balance);

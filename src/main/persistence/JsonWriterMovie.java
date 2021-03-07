@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+// Represents a writer that writes JSON representation of movie list to file
+// code from JsonSerializationDemo project
 public class JsonWriterMovie {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -26,8 +28,8 @@ public class JsonWriterMovie {
         writer = new PrintWriter(new File(destination));
     }
 
-
-
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of account to file
     public void write(List<Movie> mov) {
         JSONArray json = new JSONArray();
         for (Movie m : mov) {

@@ -1,7 +1,9 @@
 package persistence;
 
 import model.Account;
+import model.Movie;
 import model.Ticket;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -15,10 +17,23 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class JsonWriterTest extends JsonTest{
 
     List<String> seats;
+    List<String> seats1;
+    List<String> seats2;
+    List<Integer> timings;
+    List<Movie> movieList;
+
+    @BeforeEach
+    void runBefore() {
+        seats = new ArrayList<>();
+        seats1 = new ArrayList<>();
+        seats2 = new ArrayList<>();
+        timings = new ArrayList<>();
+        movieList = new ArrayList<>();
+    }
 
 
     @Test
-    void testWriterInvalidFile() {
+    void testWriterInvalidFileAcc() {
         try {
             Account account = new Account(100);
             JsonWriterAcc writer = new JsonWriterAcc("./data/my\0illegal:fileName.json");
@@ -30,15 +45,26 @@ public class JsonWriterTest extends JsonTest{
     }
 
     @Test
+    void testWriterInvalidFileMovie() {
+        try {
+            JsonWriterMovie writerMovie = new JsonWriterMovie("./data/my\0illegal:fileName.json");
+            writerMovie.open();
+            fail("IOException e");
+        } catch (FileNotFoundException e) {
+            // pass
+        }
+    }
+
+    @Test
     void testWriterEmptyAccount() {
         try {
             Account acc = new Account(100);
-            JsonWriterAcc writer = new JsonWriterAcc("./data/testReaderEmptyAccount.json");
+            JsonWriterAcc writer = new JsonWriterAcc("./data/testWriterEmptyAccount.json");
             writer.open();
             writer.write(acc);
             writer.close();
 
-            JsonReaderAcc readerAcc = new JsonReaderAcc("./data/testReaderEmptyAccount.json");
+            JsonReaderAcc readerAcc = new JsonReaderAcc("./data/testWriterEmptyAccount.json");
             acc = readerAcc.readAccount();
             assertEquals(100, acc.getBalance());
             List<Ticket> tickets = new ArrayList<>();
@@ -49,18 +75,35 @@ public class JsonWriterTest extends JsonTest{
     }
 
     @Test
+    void testWriterEmptyMovie() {
+        try {
+            JsonWriterMovie writer = new JsonWriterMovie("./data/testWriterEmptyMovie.json");
+            writer.open();
+            writer.write(movieList);
+            writer.close();
+
+            JsonReaderMovie readerMovie = new JsonReaderMovie("./data/testWriterEmptyMovie.json");
+            movieList = readerMovie.readMovie();
+            assertEquals(1, movieList.size());
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+
+    @Test
     void testWriterGeneralAccount() {
         try {
             Account acc = new Account(90);
             seats = new ArrayList<>();
             seats.add("A1");
             acc.addTicket(new Ticket("Avengers", seats, 14));
-            JsonWriterAcc writerAcc = new JsonWriterAcc("./data/testReaderGeneralAccount.json");
+            JsonWriterAcc writerAcc = new JsonWriterAcc("./data/testWriterGeneralAccount.json");
             writerAcc.open();
             writerAcc.write(acc);
             writerAcc.close();
 
-            JsonReaderAcc readerAcc = new JsonReaderAcc("./data/testReaderGeneralAccount.json");
+            JsonReaderAcc readerAcc = new JsonReaderAcc("./data/testWriterGeneralAccount.json");
             acc = readerAcc.readAccount();
             assertEquals(90, acc.getBalance());
             List<Ticket> tickets = acc.getTickets();
@@ -70,5 +113,6 @@ public class JsonWriterTest extends JsonTest{
             fail("Couldn't read from file");
         }
     }
+
 
 }

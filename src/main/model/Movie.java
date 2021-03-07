@@ -16,6 +16,7 @@ public class Movie implements Writable {
     private List<String> seats2;
     private List<Integer> timings;
 
+    // EFFECTS: constructs a movie with a name and two lists of seats and a list of timings
     public Movie(String movieName) {
         this.movieName = movieName;
         seats1 = new ArrayList<>();
@@ -75,6 +76,7 @@ public class Movie implements Writable {
         return movieName;
     }
 
+    // code base from JsonSerializationDemo project
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -85,6 +87,7 @@ public class Movie implements Writable {
         return json;
     }
 
+    // code base from JsonSerializationDemo project
     public JSONArray seats1ToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -94,6 +97,7 @@ public class Movie implements Writable {
         return jsonArray;
     }
 
+    // code base from JsonSerializationDemo project
     public JSONArray seats2ToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -103,6 +107,7 @@ public class Movie implements Writable {
         return jsonArray;
     }
 
+    // code base from JsonSerializationDemo project
     public JSONArray timingsToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -112,6 +117,4 @@ public class Movie implements Writable {
         return jsonArray;
     }
 
-
-    //make timings into jsonarrays
 }

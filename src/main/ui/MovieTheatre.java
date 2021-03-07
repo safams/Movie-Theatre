@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // UI class to handle the initialization of all data, and commands to run for each user input
+// JSON code from JsonSerializationDemo project
 public class MovieTheatre {
 
     private static final String JSON_STORE = "./data/account.json";
@@ -259,6 +260,8 @@ public class MovieTheatre {
         }
     }
 
+    // code base from JsonSerializationDemo project
+    // EFFECTS: saves account to file
     private void saveInformation() {
         try {
             jsonWriterAcc.open();
@@ -274,6 +277,9 @@ public class MovieTheatre {
         }
     }
 
+    // code base from JsonSerializationDemo project
+    // MODIFIES: this
+    // EFFECTS: loads the account from file
     private void loadInformation() {
         try {
             userAcc = jsonReaderAcc.readAccount();
