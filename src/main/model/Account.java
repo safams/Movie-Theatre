@@ -1,27 +1,31 @@
 package model;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // creates an instantiation of the user's Account, has getters for the Account's
 //balance, saved list of tickets, and options to add more tickets or add to balance
-public class Account {
+public class Account implements Writable {
 
     private int balance;
-    private static int MOVIE_PRICE = 100;
-    private static int INITIAL_BALANCE = 500;
+    private static int MOVIE_PRICE = 10;
+    //private static int INITIAL_BALANCE = 100;
     private List<Ticket> tickets;
 
 
-    public Account() {
-        balance = INITIAL_BALANCE;
+    public Account(int initialBalance) {
+        balance = initialBalance;
         tickets = new ArrayList<>();
     }
 
-    public int getInitialBalance() {
-        return INITIAL_BALANCE;
-    }
+//    public int getInitialBalance() {
+//        return INITIAL_BALANCE;
+//    }
 
     public int getMoviePrice() {
         return MOVIE_PRICE;
@@ -39,6 +43,8 @@ public class Account {
     public int getBalance() {
         return balance;
     }
+
+
 
 
     //MODIFIES: this
@@ -69,9 +75,24 @@ public class Account {
 
     //MODIFIES: this
     //EFFECTS: adds ticket to saved ticket list
-
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("balance", balance);
+        json.put("tickets", ticketsToJson());
+        return json;
+    }
+
+    private JSONArray ticketsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Ticket t : tickets) {
+            jsonArray.put(t.toJson());
+        }
+        return jsonArray;
+    }
 }

@@ -12,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountTest {
 
     private Account acc1;
+    private static int INITIAL_BALANCE = 100;
 
     @BeforeEach
     public void runBefore() {
-         acc1 = new Account();
+         acc1 = new Account(INITIAL_BALANCE);
         List<String>  seats = new ArrayList<>();
         Ticket ticket1 = new Ticket("Sofa", seats, 2);
         Ticket ticket2 = new Ticket("J", seats, 3);
@@ -24,65 +25,66 @@ public class AccountTest {
     @Test
     public void testReload(){
         // check that balance is INITIAL_BALANCE
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
         // add money
         acc1.reload(100);
         // check that new balance is equal to new money
-        assertEquals(600, acc1.getBalance());
+        assertEquals(200, acc1.getBalance());
     }
 
     //////////////////////
     @Test
     public void testBuyTicketOncOneSeat() {
         // check that balance is INITIAL_BALANCE
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
         // buy a ticket
         assertTrue(acc1.buyTicket(1));
         // check that balance is equal to new lower balance
-        assertEquals(400, acc1.getBalance());
+        int deduction = acc1.getMoviePrice() * 1;
+        assertEquals(100 - deduction, acc1.getBalance());
     }
 
     @Test
     public void testBuyTicketMultipleOneSeat(){
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
         assertTrue(acc1.buyTicket(1));
-        assertEquals(400, acc1.getBalance());
+        assertEquals(90, acc1.getBalance());
         assertTrue(acc1.buyTicket(1));
-        assertEquals(300, acc1.getBalance());
+        assertEquals(80, acc1.getBalance());
     }
 
 
     @Test
         public void testBuyTicketOncMultipleSeats(){
             // check that balance is INITIAL_BALANCE
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
             // buy a ticket
             assertTrue(acc1.buyTicket(3));
-            assertEquals(200, acc1.getBalance());
+            assertEquals(70, acc1.getBalance());
         }
 
     @Test
     public void testBuyTicketMultipleMultipleSeats(){
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
         assertTrue(acc1.buyTicket(2));
-        assertEquals(300, acc1.getBalance());
+        assertEquals(80, acc1.getBalance());
         assertTrue(acc1.buyTicket(2));
-        assertEquals(100, acc1.getBalance());
+        assertEquals(60, acc1.getBalance());
         }
 
 
     @Test
     public void testBuyTicketInsufficient(){
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
         assertTrue(acc1.buyTicket(1));
-        assertEquals(400, acc1.getBalance());
-        assertFalse(acc1.buyTicket(5));
+        assertEquals(90, acc1.getBalance());
+        assertFalse(acc1.buyTicket(10));
     }
 
     @Test
     public void testBuyTicketJustEnough(){
-        assertEquals(acc1.getInitialBalance(), acc1.getBalance());
-        assertTrue(acc1.buyTicket(5));
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
+        assertTrue(acc1.buyTicket(10));
         assertEquals(0,acc1.getBalance());
     }
 

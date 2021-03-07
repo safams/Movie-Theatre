@@ -17,53 +17,89 @@ public class MovieTest {
     }
 
     @Test
+    public void testgetMovieName() {
+        assertEquals("Sofa", myMovie.getMovieName());
+    }
+
+    @Test
     public void testaddSeatsEmpty() {
-        assertEquals(new ArrayList<>(), myMovie.getSeats());
-        myMovie.addSeats("A1");
-        assertTrue(myMovie.getSeats().contains("A1"));
+        assertEquals(new ArrayList<>(), myMovie.getSeats1());
+        assertEquals(new ArrayList<>(), myMovie.getSeats2());
+        myMovie.addSeats1("A1");
+        assertTrue(myMovie.getSeats1().contains("A1"));
+        myMovie.addSeats2("A1");
+        assertTrue(myMovie.getSeats2().contains("A1"));
     }
 
     @Test
     public void testaddSeatsEmptyMultiple() {
-        assertEquals(new ArrayList<>(), myMovie.getSeats());
-        myMovie.addSeats("A1");
-        assertTrue(myMovie.getSeats().contains("A1"));
-        myMovie.addSeats("A3");
-        assertTrue(myMovie.getSeats().contains("A3"));
+        assertEquals(new ArrayList<>(), myMovie.getSeats1());
+        assertEquals(new ArrayList<>(), myMovie.getSeats2());
+        myMovie.addSeats1("A1");
+        assertTrue(myMovie.getSeats1().contains("A1"));
+        myMovie.addSeats1("A3");
+        assertTrue(myMovie.getSeats1().contains("A3"));
+        myMovie.addSeats2("A1");
+        assertTrue(myMovie.getSeats2().contains("A1"));
+        myMovie.addSeats2("A3");
+        assertTrue(myMovie.getSeats2().contains("A3"));
     }
 
     @Test
     public void testaddSeatsNonEmptyMultiple() {
-        assertEquals(new ArrayList<>(), myMovie.getSeats());
-        myMovie.addSeats("A1");
-        assertTrue(myMovie.getSeats().contains("A1"));
-        myMovie.addSeats("A3");
-        assertTrue(myMovie.getSeats().contains("A3"));
-        myMovie.addSeats("B2");
-        assertTrue(myMovie.getSeats().contains("B2"));
+        assertEquals(new ArrayList<>(), myMovie.getSeats1());
+        assertEquals(new ArrayList<>(), myMovie.getSeats2());
+        myMovie.addSeats1("A1");
+        assertTrue(myMovie.getSeats1().contains("A1"));
+        myMovie.addSeats1("A3");
+        assertTrue(myMovie.getSeats1().contains("A3"));
+        myMovie.addSeats1("B2");
+        assertTrue(myMovie.getSeats1().contains("B2"));
+        myMovie.addSeats2("A1");
+        assertTrue(myMovie.getSeats2().contains("A1"));
+        myMovie.addSeats2("A3");
+        assertTrue(myMovie.getSeats2().contains("A3"));
+        myMovie.addSeats2("B2");
+        assertTrue(myMovie.getSeats2().contains("B2"));
     }
 
     ////////
     @Test
     public void testdeleteSeatsOnce() {
-        assertEquals(new ArrayList<>(), myMovie.getSeats());
-        myMovie.addSeats("A1");
-        assertTrue(myMovie.getSeats().contains("A1"));
-        myMovie.removeSeats("A1");
-        assertFalse(myMovie.getSeats().contains("A1"));
+        assertEquals(new ArrayList<>(), myMovie.getSeats1());
+        assertEquals(new ArrayList<>(), myMovie.getSeats2());
+        myMovie.addSeats1("A1");
+        assertTrue(myMovie.getSeats1().contains("A1"));
+        myMovie.removeSeats1("A1");
+        assertFalse(myMovie.getSeats1().contains("A1"));
+        myMovie.addSeats2("A1");
+        assertTrue(myMovie.getSeats2().contains("A1"));
+        myMovie.removeSeats2("A1");
+        assertFalse(myMovie.getSeats2().contains("A1"));
     }
 
     @Test
     public void testdeleteSeatsMultiple() {
-        assertEquals(new ArrayList<>(), myMovie.getSeats());
-        myMovie.addSeats("A1");
-        assertTrue(myMovie.getSeats().contains("A1"));
-        myMovie.addSeats("A3");
-        assertTrue(myMovie.getSeats().contains("A3"));
-        myMovie.removeSeats("A1");
-        assertFalse(myMovie.getSeats().contains("A1"));
-        myMovie.removeSeats("A3");
-        assertFalse(myMovie.getSeats().contains("A3"));
+        assertEquals(new ArrayList<>(), myMovie.getSeats1());
+        assertEquals(new ArrayList<>(), myMovie.getSeats2());
+
+        myMovie.addSeats1("A1");
+        assertTrue(myMovie.getSeats1().contains("A1"));
+        myMovie.addSeats1("A3");
+        assertTrue(myMovie.getSeats1().contains("A3"));
+        myMovie.removeSeats1("A1");
+        assertFalse(myMovie.getSeats1().contains("A1"));
+        myMovie.removeSeats1("A3");
+        assertFalse(myMovie.getSeats1().contains("A3"));
+
+        myMovie.addSeats2("A1");
+        assertTrue(myMovie.getSeats2().contains("A1"));
+        myMovie.addSeats2("A3");
+        assertTrue(myMovie.getSeats2().contains("A3"));
+        myMovie.removeSeats2("A1");
+        assertFalse(myMovie.getSeats2().contains("A1"));
+        myMovie.removeSeats2("A3");
+        assertFalse(myMovie.getSeats2().contains("A3"));
     }
     ///////////
 
@@ -94,7 +130,6 @@ public class MovieTest {
         assertTrue(myMovie.getTimings().contains(19));
     }
 
-    ///////////
 
     @Test
     public void testremoveTimingsOnce() {

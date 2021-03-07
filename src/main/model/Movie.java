@@ -1,27 +1,38 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Class to create a Movie object, with methods to add timings and seats to a movie,
 // and getters to retrieve the movie name and timing and seats
-public class Movie {
+public class Movie implements Writable {
 
     private String movieName;
-    private List<String> seats;
+    private List<String> seats1;
+    private List<String> seats2;
     private List<Integer> timings;
 
     public Movie(String movieName) {
         this.movieName = movieName;
-        seats = new ArrayList<>();
+        seats1 = new ArrayList<>();
         timings = new ArrayList<>();
+        seats2 = new ArrayList<>();
     }
 
     //MODIFIES: this
     //EFFECTS: adds seat to Movie's list of seats
-    public void addSeats(String seat) {
-        seats.add(seat);
+    public void addSeats1(String seat) {
+        seats1.add(seat);
     }
+
+    public void addSeats2(String seat) {
+        seats2.add(seat);
+    }
+
     //MODIFIES: this
     //EFFECTS: adds time to Movie's list of timings
 
@@ -32,8 +43,12 @@ public class Movie {
     //REQUIRES: list != null
     //MODIFIES: this
     //EFFECTS: removes seat from movie's list of seats
-    public void removeSeats(String seat) {
-        seats.remove(seat);
+    public void removeSeats1(String seat) {
+        seats1.remove(seat);
+    }
+
+    public void removeSeats2(String seat) {
+        seats2.remove(seat);
     }
 
     //REQUIRES: list != null
@@ -43,8 +58,13 @@ public class Movie {
         timings.remove(time);
     }
 
-    public List<String> getSeats() {
-        return seats;
+
+    public List<String> getSeats1() {
+        return seats1;
+    }
+
+    public List<String> getSeats2() {
+        return seats2;
     }
 
     public List<Integer> getTimings() {
@@ -55,4 +75,43 @@ public class Movie {
         return movieName;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("movie name:", movieName);
+        json.put("seat list timing 1:", seats1ToJson());
+        json.put("seat list timing 2:", seats2ToJson());
+        json.put("timings:", timingsToJson());
+        return json;
+    }
+
+    public JSONArray seats1ToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String s : seats1) {
+            jsonArray.put(s);
+        }
+        return jsonArray;
+    }
+
+    public JSONArray seats2ToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String s : seats2) {
+            jsonArray.put(s);
+        }
+        return jsonArray;
+    }
+
+    public JSONArray timingsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Integer i : timings) {
+            jsonArray.put(i);
+        }
+        return jsonArray;
+    }
+
+
+    //make timings into jsonarrays
 }

@@ -1,9 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.util.ArrayList;
 import java.util.List;
 // Class to construct a Ticket object, and getters to access the ticket's information
 
-public class Ticket {
+public class Ticket implements Writable {
 
     private String name;
     private List<String> seats;
@@ -19,10 +24,36 @@ public class Ticket {
         return name;
     }
 
-    //EFFECTS: overrides Java's toSTring method, prints out a Ticket
+    public List<String> getSeats() {
+        return seats;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "\nName: " + getName() + " | Seats: " + getSeats() + " | Time: " + getTime();
+//    }
+
     @Override
-    public String toString() {
-        return "\nName: " + name + " | Seats: " + seats + " | Time: " + time;
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name: ", name);
+        json.put("seats: ", seatsToJson());
+        json.put("time: ", time);
+        return json;
+    }
+
+    public JSONArray seatsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String s : seats) {
+            jsonArray.put(s);
+        }
+
+        return jsonArray;
     }
 
 
