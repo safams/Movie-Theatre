@@ -8,7 +8,7 @@ import ui.MovieTheatre;
 
 public class Main {
     public static void main(String[] args) {
-        new MovieTheatre();
+        new MovieTheatreGUI();
 
 
     }

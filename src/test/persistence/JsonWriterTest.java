@@ -44,16 +44,16 @@ public class JsonWriterTest extends JsonTest{
         }
     }
 
-    @Test
-    void testWriterInvalidFileMovie() {
-        try {
-            JsonWriterMovie writerMovie = new JsonWriterMovie("./data/my\0illegal:fileName.json");
-            writerMovie.open();
-            fail("IOException e");
-        } catch (FileNotFoundException e) {
-            // pass
-        }
-    }
+//    @Test
+//    void testWriterInvalidFileMovie() {
+//        try {
+//            JsonWriterMovie writerMovie = new JsonWriterMovie("./data/my\0illegal:fileName.json");
+//            writerMovie.open();
+//            fail("IOException e");
+//        } catch (FileNotFoundException e) {
+//            // pass
+//        }
+//    }
 
     @Test
     void testWriterEmptyAccount() {
@@ -74,21 +74,21 @@ public class JsonWriterTest extends JsonTest{
         }
     }
 
-    @Test
-    void testWriterEmptyMovie() {
-        try {
-            JsonWriterMovie writer = new JsonWriterMovie("./data/testWriterEmptyMovie.json");
-            writer.open();
-            writer.write(movieList);
-            writer.close();
-
-            JsonReaderMovie readerMovie = new JsonReaderMovie("./data/testWriterEmptyMovie.json");
-            movieList = readerMovie.readMovie();
-            assertEquals(1, movieList.size());
-        } catch (IOException e) {
-            fail("Exception should not have been thrown");
-        }
-    }
+//    @Test
+//    void testWriterEmptyMovie() {
+//        try {
+//            JsonWriterMovie writer = new JsonWriterMovie("./data/testWriterEmptyMovie.json");
+//            writer.open();
+//            writer.write(movieList);
+//            writer.close();
+//
+//            JsonReaderMovie readerMovie = new JsonReaderMovie("./data/testWriterEmptyMovie.json");
+//            movieList = readerMovie.readMovie();
+//            assertEquals(1, movieList.size());
+//        } catch (IOException e) {
+//            fail("Exception should not have been thrown");
+//        }
+//    }
 
 
     @Test

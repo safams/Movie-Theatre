@@ -40,16 +40,16 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
-    @Test
-    void testReaderNonExistentFileMovie() {
-        JsonReaderMovie movReader = new JsonReaderMovie("./data/noSuchFile.json");
-        try {
-            movieList = movReader.readMovie();
-            fail("IOException expected");
-        } catch (IOException e) {
-            //pass
-        }
-    }
+//    @Test
+//    void testReaderNonExistentFileMovie() {
+//        JsonReaderMovie movReader = new JsonReaderMovie("./data/noSuchFile.json");
+//        try {
+//            movieList = movReader.readMovie();
+//            fail("IOException expected");
+//        } catch (IOException e) {
+//            //pass
+//        }
+//    }
 
     @Test
     void testReaderEmptyAccountAcc() {
@@ -64,16 +64,16 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
-    @Test
-    void testReaderEmptyMovie() {
-        JsonReaderMovie movReader = new JsonReaderMovie("./data/testReaderEmptyMovie.json");
-        try {
-            movieList = movReader.readMovie();
-            assertEquals(1, movieList.size());
-        } catch (IOException e) {
-            fail("couldn't read from file");
-        }
-    }
+//    @Test
+//    void testReaderEmptyMovie() {
+//        JsonReaderMovie movReader = new JsonReaderMovie("./data/testReaderEmptyMovie.json");
+//        try {
+//            movieList = movReader.readMovie();
+//            assertEquals(1, movieList.size());
+//        } catch (IOException e) {
+//            fail("couldn't read from file");
+//        }
+//    }
 
     @Test
     void tstReaderGeneralAccountAcc() {
@@ -90,16 +90,16 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
-    @Test
-    void testReaderGeneralMovie() {
-        JsonReaderMovie readerMovie = new JsonReaderMovie("./data/testReaderGeneralMovie.json");
-        try {
-            movieList = readerMovie.readMovie();
-            checkMovie("Jumanji", seats1, seats2, timings, movieList.get(0) );
-        } catch (IOException e) {
-            fail("Couldn't read from file");
-        }
-    }
+//    @Test
+//    void testReaderGeneralMovie() {
+//        JsonReaderMovie readerMovie = new JsonReaderMovie("./data/testReaderGeneralMovie.json");
+//        try {
+//            movieList = readerMovie.readMovie();
+//            checkMovie("Jumanji", seats1, seats2, timings, movieList.get(0) );
+//        } catch (IOException e) {
+//            fail("Couldn't read from file");
+//        }
+//    }
 
 
 }

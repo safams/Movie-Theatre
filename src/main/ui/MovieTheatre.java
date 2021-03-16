@@ -4,9 +4,9 @@ import model.Movie;
 import model.Account;
 import model.Ticket;
 import persistence.JsonReaderAcc;
-import persistence.JsonReaderMovie;
+//import persistence.JsonReaderMovie;
 import persistence.JsonWriterAcc;
-import persistence.JsonWriterMovie;
+//import persistence.JsonWriterMovie;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class MovieTheatre {
 
     private static final String JSON_STORE = "./data/account.json";
-    private static final String JSON_STORE2 = "./data/movie.json";
+   // private static final String JSON_STORE2 = "./data/movie.json";
     private static final String VIEW_COMMAND = "view";
     private static final String CANCEL_COMMAND = "cancel";
     private static final String BOOK_COMMAND = "book";
@@ -32,8 +32,8 @@ public class MovieTheatre {
 
     private JsonWriterAcc jsonWriterAcc;
     private JsonReaderAcc jsonReaderAcc;
-    private JsonWriterMovie jsonWriterMovie;
-    private JsonReaderMovie jsonReaderMovie;
+    //private JsonWriterMovie jsonWriterMovie;
+    //private JsonReaderMovie jsonReaderMovie;
 
     private List<Movie> movieList;
 
@@ -69,8 +69,8 @@ public class MovieTheatre {
 
         jsonWriterAcc = new JsonWriterAcc(JSON_STORE);
         jsonReaderAcc = new JsonReaderAcc(JSON_STORE);
-        jsonWriterMovie = new JsonWriterMovie(JSON_STORE2);
-        jsonReaderMovie = new JsonReaderMovie(JSON_STORE2);
+        //jsonWriterMovie = new JsonWriterMovie(JSON_STORE2);
+        //jsonReaderMovie = new JsonReaderMovie(JSON_STORE2);
 
         while (keepGoing) {
             printInstructions();
@@ -265,15 +265,15 @@ public class MovieTheatre {
     private void saveInformation() {
         try {
             jsonWriterAcc.open();
-            jsonWriterMovie.open();
-            jsonWriterMovie.write(movieList);
+            //jsonWriterMovie.open();
+            //jsonWriterMovie.write(movieList);
             jsonWriterAcc.write(userAcc);
             jsonWriterAcc.close();
-            jsonWriterMovie.close();
+            //jsonWriterMovie.close();
             System.out.println("Account info saved to " + JSON_STORE);
-            System.out.println("Movie info saved to " + JSON_STORE2);
+            //System.out.println("Movie info saved to " + JSON_STORE2);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE + "and " + JSON_STORE2);
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -283,11 +283,11 @@ public class MovieTheatre {
     private void loadInformation() {
         try {
             userAcc = jsonReaderAcc.readAccount();
-            movieList = jsonReaderMovie.readMovie();
+            //movieList = jsonReaderMovie.readMovie();
             System.out.println("Account info loaded from " + JSON_STORE);
-            System.out.println("Movie info loaded from " + JSON_STORE2);
+            //System.out.println("Movie info loaded from " + JSON_STORE2);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE + "and " + JSON_STORE2);
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
