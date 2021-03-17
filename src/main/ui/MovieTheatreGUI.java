@@ -227,4 +227,11 @@ public class MovieTheatreGUI {
         return rowC;
     }
 
+    public void finishPurchase(String movie, int timing, List seats) {
+        Ticket newTicket = new Ticket(movie, seats, timing);
+        userAcc.addTicket(newTicket);
+        int i = seats.size();
+        userAcc.buyTicket(i);
+    }
+
 }

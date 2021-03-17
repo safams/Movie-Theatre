@@ -1,6 +1,5 @@
 package ui.tools;
 
-import sun.tools.jps.Jps;
 import ui.MovieTheatreGUI;
 
 import javax.swing.*;
@@ -65,14 +64,28 @@ public class BookingTool extends JPanel implements ActionListener, ListSelection
 
         selectMovie();
 
-        selectTiming();
-       // selectSeats();
+
+        selectTimingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectTiming();
+            }
+        });
+
+//        selectSeatsButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                selectSeats();
+//            }
+//        });
 
 
         this.add(movieNames);
         this.add(selectMovieButton);
         this.add(movieTimings);
         this.add(selectTimingButton);
+
+
 
         //this.add(selectSeatsButton);
 
@@ -91,53 +104,45 @@ public class BookingTool extends JPanel implements ActionListener, ListSelection
         });
     }
 
-    private class SelectTimingButtonListener implements ActionListener {
-        private JPanel bookingTool;
-
-        public SelectTimingButtonListener(JPanel bookingTool) {
-            this.bookingTool = bookingTool;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-
-            selectedTiming = Integer.parseInt(movieTimings.getSelectedItem().toString());
-            rowA = ui.parseRowA(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
-            rowB = ui.parseRowB(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
-            rowC = ui.parseRowC(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
-
-            listA = new JList(rowA.toArray());
-            listB = new JList(rowB.toArray());
-            listC = new JList(rowC.toArray());
-
-            listA.setVisibleRowCount(3);
-            listB.setVisibleRowCount(3);
-            listC.setVisibleRowCount(3);
-
-            listA.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listB.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listC.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            bookingTool.add(listA);
-            bookingTool.add(listB);
-            bookingTool.add(listC);
-
-            bookingTool.add(selectSeatsButton);
-            bookingTool.setVisible(true);
-
-        }
-    }
 
     public void selectTiming() {
-        SelectTimingButtonListener btnListner = new SelectTimingButtonListener(this);
-        selectTimingButton.addActionListener(btnListner);
+
+        selectedTiming = Integer.parseInt(movieTimings.getSelectedItem().toString());
+        rowA = ui.parseRowA(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
+        rowB = ui.parseRowB(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
+        rowC = ui.parseRowC(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
+
+        listA = new JList(rowA.toArray());
+        listB = new JList(rowB.toArray());
+        listC = new JList(rowC.toArray());
+
+        listA.setVisibleRowCount(3);
+        listB.setVisibleRowCount(3);
+        listC.setVisibleRowCount(3);
+
+        listA.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listB.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listC.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.add(listA);
+        this.add(listB);
+        this.add(listC);
+
+
+        add(selectSeatsButton);
+
+        listA.revalidate();
+        listB.revalidate();
+        listC.revalidate();
+
+
     }
 
 //    public void selectSeats() {
-//        listA.addListSelectionListener(new ListSelectionListener() {
-//            @Override
-//            public void valueChanged(ListSelectionEvent e) {
+//        List<String> list1 = listA.getSelectedValuesList();
+//        List<String> list2 = listB.getSelectedValuesList();
+//        List<String> list3 = listC.getSelectedValuesList();
 //
-//            }
-//        });
+//        List<String> finalSelection = new ArrayList<>();
 //    }
 
     public void test() {
