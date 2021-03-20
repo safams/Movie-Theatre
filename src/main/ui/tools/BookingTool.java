@@ -1,5 +1,6 @@
 package ui.tools;
 
+import model.Ticket;
 import ui.MovieTheatreGUI;
 
 import javax.swing.*;
@@ -8,61 +9,124 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-public class BookingTool extends JPanel implements ActionListener, ListSelectionListener {
+//Booking Tool panel to let user select a movie, timing, and seat, and displays purchased ticket
+public class BookingTool extends JPanel implements ActionListener {
 
-
-    private static final String BOOK_COMMAND = "book";
     MovieTheatreGUI ui;
     List<Integer> timings;
     JComboBox movieTimings;
     JComboBox movieNames;
     String selectedMovie;
 
+    List<String> finalSelection;
+
     List<String> rowA;
     List<String> rowB;
     List<String> rowC;
 
+    JLabel finishedTicket;
 
 
     JButton selectTimingButton;
     JButton selectSeatsButton;
     JButton selectMovieButton;
+    JButton bookMovieButton;
     List<String> list;
 
     Integer selectedTiming;
-    List<String> selectedSeats;
 
     JList listA;
     JList listB;
     JList listC;
 
 
+    Boolean whichList;
 
+
+
+    //EFFECTS: constructs a booking tool with gui passed in and sets up background
     public BookingTool(MovieTheatreGUI gui) {
         this.setBackground(new Color(242, 201, 170));
 
         ui = gui;
         list = new ArrayList<>();
+        bookMovieButton = new JButton("Book a new movie");
+        this.add(bookMovieButton);
         dropDowns();
-        test();
         this.setVisible(true);
+
     }
 
-    private void dropDowns() {
-        selectMovieButton = new JButton("Select Movie");
-        selectTimingButton = new JButton("Select Timing");
-        selectSeatsButton = new JButton("Select Seats");
+    //MODIFIES: this
+    //EFFECTS: creates buttons and dopdowns to select movies, and actionliseners for button clicks
+    public void dropDowns() {
+        selectMovieButton = new JButton("Confirm Movie");
+        selectTimingButton = new JButton("Confirm Timing");
+        selectSeatsButton = new JButton("Confirm Seat(s)");
 
-        list.add("No Timing Selected");
+        list.add("No Timing Chosen");
         movieNames = new JComboBox(ui.getMovieNames().toArray());
         movieTimings = new JComboBox(list.toArray());
+        finishedTicket = new JLabel("");
+        this.add(finishedTicket);
+
+
+        bookMovieButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addBookingOptions();
+                remove(finishedTicket);
+            }
+        });
 
         selectMovie();
+
+
+        selectSeatsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectSeats();
+            }
+        });
+
+
+    }
+
+    //MODIFES: this
+    //EFFECTS: add the movie names and buttons to the panel
+    public void addBookingOptions() {
+        this.add(movieNames);
+        this.add(selectMovieButton);
+
+
+        movieNames.revalidate();
+        selectMovieButton.revalidate();
+
+    }
+
+
+
+    //EFFECTS: actionlistener for the movie name selection button
+    //         sets up the timing methods
+    public void selectMovie() {
+        selectMovieButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedMovie = movieNames.getSelectedItem().toString();
+                timings = ui.returnTimings(selectedMovie);
+                movieTimings.removeAllItems();
+
+                movieTimings.addItem("No Timing Chosen");
+                movieTimings.addItem(timings.get(0));
+                movieTimings.addItem(timings.get(1));
+
+                timingButtons();
+
+            }
+        });
 
 
         selectTimingButton.addActionListener(new ActionListener() {
@@ -71,54 +135,56 @@ public class BookingTool extends JPanel implements ActionListener, ListSelection
                 selectTiming();
             }
         });
+    }
 
-//        selectSeatsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                selectSeats();
-//            }
-//        });
-
-
-        this.add(movieNames);
-        this.add(selectMovieButton);
+    //MODIFIES: this
+    //EFFECTS: adds timing button and dropdown options in panel
+    public void timingButtons() {
         this.add(movieTimings);
         this.add(selectTimingButton);
-
-
-
-        //this.add(selectSeatsButton);
-
-    }
-
-    public void selectMovie() {
-        selectMovieButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedMovie = movieNames.getSelectedItem().toString();
-                timings = ui.returnTimings(selectedMovie);
-                movieTimings.removeAllItems();
-                movieTimings.addItem(timings.get(0));
-                movieTimings.addItem(timings.get(1));
-            }
-        });
+        movieTimings.revalidate();
+        selectTimingButton.revalidate();
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: based on timing selection, creates up to 3 rows of seats and adds to panel
     public void selectTiming() {
-
         selectedTiming = Integer.parseInt(movieTimings.getSelectedItem().toString());
         rowA = ui.parseRowA(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
         rowB = ui.parseRowB(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
         rowC = ui.parseRowC(ui.returnSeats(ui.returnMovieFromName(selectedMovie), selectedTiming));
 
+        whichList = ui.returnSeats1(ui.returnMovieFromName(selectedMovie), selectedTiming);
+
         listA = new JList(rowA.toArray());
         listB = new JList(rowB.toArray());
         listC = new JList(rowC.toArray());
 
+        DefaultListCellRenderer renderer1 = (DefaultListCellRenderer)listA.getCellRenderer();
+        renderer1.setHorizontalAlignment(JLabel.CENTER);
+        DefaultListCellRenderer renderer2 = (DefaultListCellRenderer)listB.getCellRenderer();
+        renderer2.setHorizontalAlignment(JLabel.CENTER);
+        DefaultListCellRenderer renderer3 = (DefaultListCellRenderer)listC.getCellRenderer();
+        renderer3.setHorizontalAlignment(JLabel.CENTER);
+
+        selectimingg();
+    }
+
+    public void selectimingg() {
         listA.setVisibleRowCount(3);
         listB.setVisibleRowCount(3);
         listC.setVisibleRowCount(3);
+
+
+
+        listA.setFixedCellHeight(30);
+        listA.setFixedCellWidth(30);
+        listB.setFixedCellHeight(30);
+        listB.setFixedCellWidth(30);
+        listC.setFixedCellHeight(30);
+        listC.setFixedCellWidth(30);
+
 
         listA.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listB.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -133,44 +199,80 @@ public class BookingTool extends JPanel implements ActionListener, ListSelection
         listA.revalidate();
         listB.revalidate();
         listC.revalidate();
+    }
+
+
+
+    //MODIFIES: this
+    //EFFECTS: creates a ticket with selected movie, timing, seat(s), and removes
+    //         seats from theatre, adds ticket to user's list, and re-sets the buttons
+    public void selectSeats() {
+        List<String> list1 = listA.getSelectedValuesList();
+        List<String> list2 = listB.getSelectedValuesList();
+        List<String> list3 = listC.getSelectedValuesList();
+
+        finalSelection = new ArrayList<>();
+        finalSelection.addAll(list1);
+        finalSelection.addAll(list2);
+        finalSelection.addAll(list3);
+
+        Ticket temporary = ui.finishPurchase(selectedMovie, selectedTiming, finalSelection);
+
+
+        this.remove(finishedTicket);
+
+        finishedTicket.setText(toString(temporary));
+        this.add(finishedTicket);
+
+
+
+
+        finishedTicket.revalidate();
+
+        if (whichList) {
+            ui.removeThingsSeats1(selectedMovie, finalSelection);
+        } else {
+            ui.removeThingsSeats2(selectedMovie, finalSelection);
+        }
+
+
+        this.remove(listA);
+        this.remove(listB);
+        this.remove(listC);
+        this.remove(selectSeatsButton);
+
+        removeBookingOptions();
 
 
     }
 
-//    public void selectSeats() {
-//        List<String> list1 = listA.getSelectedValuesList();
-//        List<String> list2 = listB.getSelectedValuesList();
-//        List<String> list3 = listC.getSelectedValuesList();
-//
-//        List<String> finalSelection = new ArrayList<>();
-//    }
+    //MODIFIES: this
+    //EFFECTS: removes movie names and movie timings buttons
+    public void removeBookingOptions() {
+        this.remove(movieNames);
+        this.remove(selectMovieButton);
+        this.remove(movieTimings);
+        this.remove(selectTimingButton);
 
-    public void test() {
-        String[] colornames = {"black", "Blue", "purple", "red", "pink", "green", "orange"};
-        JList list = new JList(colornames);
-        list.setVisibleRowCount(3);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        add(new JScrollPane(list));
-        list.addListSelectionListener(this);
     }
 
+
+
+    //EFFECTS: implemented method
     @Override
     public void actionPerformed(ActionEvent e) {
         //
     }
 
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
 
+
+    //EFFECTS: turns a ticket into a string to be displayed
+    public String toString(Ticket ticket) {
+        return "Name: " + ticket.getName() + " | Seats: " + ticket.getSeats() + " | Time: " + ticket.getTime();
     }
 
 
-    //Movie name dropdown DONE
-    //Movie Seats drop down
-    //Movie timing dropdown DONE
-    //book button
-    //ticket image
 
 
 }

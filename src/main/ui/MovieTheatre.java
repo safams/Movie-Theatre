@@ -389,4 +389,6 @@ public class MovieTheatre {
     public String toString(Ticket ticket) {
         return "Name: " + ticket.getName() + " | Seats: " + ticket.getSeats() + " | Time: " + ticket.getTime();
     }
+
+
 }

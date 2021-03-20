@@ -1,26 +1,42 @@
 package ui;
 
-import com.sun.tools.internal.ws.processor.model.ModelVisitor;
 import model.Account;
 import model.Movie;
 import model.Ticket;
+import persistence.JsonReaderAcc;
+import persistence.JsonWriterAcc;
 import ui.tools.BalanceTool;
 import ui.tools.BookingTool;
+import ui.tools.ImageTool;
 import ui.tools.TicketListTool;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieTheatreGUI {
 
     private static int INITIAL_BALANCE = 100;
-    private Account userAcc;
+    Account userAcc;
+    //private Account userAcc;
     private List<Movie> movieList;
     JFrame window;
     JPanel bookingTool;
     JPanel balanceTool;
+    JPanel imageTool;
+    JButton finishPurchaseButton;
+    List<String> ticketList;
+
+    private static final String JSON_STORE = "./data/account.json";
+    private JsonWriterAcc jsonWriterAcc;
+    private JsonReaderAcc jsonReaderAcc;
+
+
+
+
     JPanel ticketListTool;
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
@@ -41,36 +57,37 @@ public class MovieTheatreGUI {
         initializeMovies();
         window = new JFrame("Safa's Theatre");
         setWindow();
+        jsonWriterAcc = new JsonWriterAcc(JSON_STORE);
+        jsonReaderAcc = new JsonReaderAcc(JSON_STORE);
+
+
     }
 
+
     public void setWindow() {
-        window.setSize(1000,600);
+        window.setSize(1500,700);
         window.setLayout(gbl);
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
 
+        ticketList = new ArrayList<>();
+        ticketList.add("Your booked Tickets");
+
         setBookingTool();
         setBalanceTool();
         setTicketListTool();
+        setImageTool();
         window.setVisible(true);
+        //window.setResizable(false);
     }
 
-    public void setBookingTool() {
-        bookingTool = new BookingTool(this);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 6;
-        gbc.gridheight = 1;
-        gbl.setConstraints(bookingTool, gbc);
-        window.add(bookingTool);
-    }
 
     public void setBalanceTool() {
         balanceTool = new BalanceTool(this);
-        gbc.gridx = 3;
+        gbc.gridx = 5;
         gbc.gridy = 0;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 1;
         gbc.gridheight = 1;
         gbl.setConstraints(balanceTool, gbc);
         window.add(balanceTool);
@@ -80,10 +97,30 @@ public class MovieTheatreGUI {
         ticketListTool = new TicketListTool(this);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = 5;
         gbc.gridheight = 1;
         gbl.setConstraints(ticketListTool, gbc);
         window.add(ticketListTool);
+    }
+
+    public void setBookingTool() {
+        bookingTool = new BookingTool(this);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 5;
+        gbc.gridheight = 1;
+        gbl.setConstraints(bookingTool, gbc);
+        window.add(bookingTool);
+    }
+
+    public void setImageTool() {
+        imageTool = new ImageTool(this);
+        gbc.gridx = 5;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbl.setConstraints(imageTool, gbc);
+        window.add(imageTool);
     }
 
     public int getBalance() {
@@ -197,6 +234,15 @@ public class MovieTheatreGUI {
         }
     }
 
+    public Boolean returnSeats1(Movie movie, int timing) {
+        int index = movie.getTimings().indexOf(timing);
+        if (index == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public List<String> parseRowA(List<String> seats) {
         List<String> rowA = new ArrayList<>();
         for (String s : seats) {
@@ -227,11 +273,91 @@ public class MovieTheatreGUI {
         return rowC;
     }
 
-    public void finishPurchase(String movie, int timing, List seats) {
+    public Ticket finishPurchase(String movie, int timing, List seats) {
         Ticket newTicket = new Ticket(movie, seats, timing);
         userAcc.addTicket(newTicket);
+//        addTicket(toString(newTicket));
         int i = seats.size();
         userAcc.buyTicket(i);
+        reAdd();
+        balanceTool.revalidate();
+        ticketListTool.revalidate();
+        return newTicket;
     }
+
+    public List<Ticket> getTicketList() {
+//
+//        for (Ticket t : userAcc.getTickets()) {
+//            ticketList.add(toString(t));
+//        }
+//        return ticketList;
+        return userAcc.getTickets();
+    }
+
+
+    public void removeThingsSeats1(String movie, List<String> seats) {
+        Movie x = returnMovieFromName(movie);
+        for (String s : seats) {
+            if (x.getSeats1().contains(s)) {
+                x.getSeats1().remove(s);
+            }
+        }
+
+    }
+
+    public void removeThingsSeats2(String movie, List<String> seats) {
+        Movie x = returnMovieFromName(movie);
+        for (String s : seats) {
+            if (x.getSeats2().contains(s)) {
+                x.getSeats2().remove(s);
+            }
+        }
+
+    }
+
+    public void save() throws FileNotFoundException {
+        jsonWriterAcc.open();
+        jsonWriterAcc.write(userAcc);
+        jsonWriterAcc.close();
+    }
+
+    public void load() throws IOException {
+        userAcc = jsonReaderAcc.readAccount();
+        reAdd();
+        balanceTool.revalidate();
+        ticketListTool.revalidate();
+
+
+    }
+
+    public void reAdd() {
+        window.remove(balanceTool);
+        window.remove(ticketListTool);
+        window.setLayout(gbl);
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+
+        setBalanceTool();
+        setTicketListTool();
+
+    }
+
+    public String toString(Ticket ticket) {
+        return "Name: " + ticket.getName() + " | Seats: " + ticket.getSeats() + " | Time: " + ticket.getTime();
+    }
+
+    public void cancelPurchase(int index) {
+        Ticket delete = userAcc.getTickets().get(index);
+        int numSeats = delete.getSeats().size();
+        int refund = numSeats * userAcc.getMoviePrice();
+        userAcc.deleteTicket(delete);
+        userAcc.reload(refund);
+        reAdd();
+        balanceTool.revalidate();
+        ticketListTool.revalidate();
+    }
+
+
 
 }
