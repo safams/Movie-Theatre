@@ -69,7 +69,7 @@ public class BookingTool extends JPanel implements ActionListener {
     }
 
     public Image background() {
-        bgicon = new ImageIcon("curtainsRed.jpg");
+        bgicon = new ImageIcon("./data/curtainsRed.jpg");
         iconToImage = new IconToImage(bgicon);
         image = iconToImage.getImage();
         return image;

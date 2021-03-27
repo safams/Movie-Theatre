@@ -80,9 +80,9 @@ public class ImageTool extends JPanel {
     public void setUp() {
         images.setCellRenderer(new ImageListCellRenderer());
 
-        image1 = new ImageIcon("Avengers.jpg");
-        image2 = new ImageIcon("Interstellar.jpg");
-        image3 = new ImageIcon("jumanji.jpg");
+        image1 = new ImageIcon("./data/Avengers.jpg");
+        image2 = new ImageIcon("./data/Interstellar.jpg");
+        image3 = new ImageIcon("./data/jumanji.jpg");
 
         imageLabel1 = new JLabel(image1, JLabel.LEFT);
         imageLabel2 = new JLabel(image2, JLabel.LEFT);
