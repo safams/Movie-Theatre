@@ -14,7 +14,6 @@ public class Account implements Writable {
 
     private int balance;
     private static int MOVIE_PRICE = 10;
-    //private static int INITIAL_BALANCE = 100;
     private List<Ticket> tickets;
 
 
@@ -34,7 +33,7 @@ public class Account implements Writable {
     //MODIFIES: this
     //EFFECTS: adds dollar amount to Accounts current balance
     public void reload(int money) {
-        this.balance = getBalance() + money;
+        this.balance = balance + money;
 
     }
 
@@ -51,8 +50,8 @@ public class Account implements Writable {
     //         else returns false
     public boolean buyTicket(Integer numSeats) {
         int purchase = numSeats * MOVIE_PRICE;
-        if (getBalance() >= purchase) {
-            balance = getBalance() - purchase;
+        if (balance >= purchase) {
+            balance = balance - purchase;
             return true;
         } else {
             return false;

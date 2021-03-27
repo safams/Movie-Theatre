@@ -27,7 +27,7 @@ public class BalanceTool extends JPanel implements ActionListener {
     ///        and layout, and calls methods in order of operations
     public BalanceTool(MovieTheatreGUI gui) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(new Color(161, 209, 209));
+        this.setBackground(new Color(56, 4, 14));
         ui = gui;
         setBalance();
         setReload();
@@ -41,6 +41,9 @@ public class BalanceTool extends JPanel implements ActionListener {
     public void setBalance() {
         balance = ui.getBalance();
         balanceLabel = new JLabel("Your Current Balance: $" + balance);
+        balanceLabel.setFont(new Font("SansSerif Plain", Font.BOLD, 18));
+        balanceLabel.setForeground(Color.white);
+        balanceLabel.setSize(50,50);
         this.add(balanceLabel);
     }
 
@@ -48,6 +51,7 @@ public class BalanceTool extends JPanel implements ActionListener {
     //EFFECTS: creates a Reload button that and textfield to let user input money to add to balance
     public void setReload() {
         JLabel reloadLabel = new JLabel("Enter dollar amount to reload to account $:");
+        reloadLabel.setForeground(Color.white);
         this.add(reloadLabel);
         input = new JTextField(1);
         input.setMaximumSize(
@@ -66,7 +70,8 @@ public class BalanceTool extends JPanel implements ActionListener {
         String text = input.getText();
         int amount = Integer.parseInt(text);
         ui.reload(amount);
-        balanceLabel.setText("Current Balance: $" + ui.getBalance());
+        balanceLabel.setText("Your Current Balance: $" + ui.getBalance());
+        balanceLabel.setForeground(Color.white);
     }
 
     public void save() {

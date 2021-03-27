@@ -38,7 +38,7 @@ public class ImageTool extends JPanel {
 
     //EFFECTS: constructs imageTool JPanel with background colours and method calls and the MovieTheatreGUI passed in
     public ImageTool(MovieTheatreGUI gui) {
-        this.setBackground(new Color(214, 202, 237));
+        this.setBackground(new Color(56, 4, 14));
         ui = gui;
         images = new JList();
         setUp();
@@ -55,11 +55,11 @@ public class ImageTool extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int i = images.getSelectedIndex();
                 if (i == 0) {
-                    setStuff("              Rotten Tomatoes: 69%  ||    *****");
+                    setStuff("  Rotten Tomatoes: 69%  ||  *****  ||  Robert Downey Jr., Chris Hemsworth...");
                 } else if (i == 1) {
-                    setStuff("              Rotten Tomatoes: 98%  ||      ***");
+                    setStuff("  Rotten Tomatoes: 98%  ||   ***   ||  Matthew McConaughey, Anne Hathaway...");
                 } else if (i == 2) {
-                    setStuff("              Rotten Tomatoes: 45%  ||        *");
+                    setStuff("  Rotten Tomatoes: 45%  ||    *    ||  Kevin Hart, Karen Gillan... ");
                 }
             }
         });
@@ -69,6 +69,7 @@ public class ImageTool extends JPanel {
     //EFFECTS: sets t to be text of a JLabel and adds it to panel
     public void setStuff(String t) {
         label.setText(t);
+        label.setForeground(Color.white);
         this.add(label);
         label.revalidate();
     }
@@ -111,11 +112,6 @@ public class ImageTool extends JPanel {
         images.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         images.setFixedCellHeight(250);
         imagesScrollPane = new JScrollPane(images);
-        //imagesScrollPane.setHorizontalScrollBar(new JScrollBar());
-        //imagesScrollPane.createHorizontalScrollBar();
-        //imagesScrollPane.scroll
-//        imagesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        imagesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         imagesScrollPane.setMinimumSize(new Dimension(300, 100));
         images.setVisibleRowCount(1);
         this.add(imagesScrollPane);

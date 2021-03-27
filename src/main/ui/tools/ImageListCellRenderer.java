@@ -6,7 +6,7 @@ import java.awt.*;
 //Class to create a ListCellRenderer to use for imageJList
 public class ImageListCellRenderer implements ListCellRenderer {
 
-    //EFFECTS: constructs a cell with colours
+    //EFFECTS: constructs a cell with colours and blank JLabel
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean is,
                                                   boolean cellHasFocus) {

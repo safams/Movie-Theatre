@@ -45,11 +45,19 @@ public class BookingTool extends JPanel implements ActionListener {
 
     Boolean whichList;
 
+    ImageIcon bgicon;
+
+    IconToImage iconToImage;
+
+    Image image;
+
+
 
 
     //EFFECTS: constructs a booking tool with gui passed in and sets up background
     public BookingTool(MovieTheatreGUI gui) {
-        this.setBackground(new Color(242, 201, 170));
+        background();
+        //this.setBackground(new Color(242, 201, 170));
 
         ui = gui;
         list = new ArrayList<>();
@@ -58,6 +66,18 @@ public class BookingTool extends JPanel implements ActionListener {
         dropDowns();
         this.setVisible(true);
 
+    }
+
+    public Image background() {
+        bgicon = new ImageIcon("curtainsRed.jpg");
+        iconToImage = new IconToImage(bgicon);
+        image = iconToImage.getImage();
+        return image;
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
     }
 
     //MODIFIES: this
@@ -78,7 +98,9 @@ public class BookingTool extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addBookingOptions();
+                finishedTicket.setText("");
                 remove(finishedTicket);
+
             }
         });
 
@@ -218,13 +240,13 @@ public class BookingTool extends JPanel implements ActionListener {
 
         Ticket temporary = ui.finishPurchase(selectedMovie, selectedTiming, finalSelection);
 
-
         this.remove(finishedTicket);
 
         finishedTicket.setText(toString(temporary));
         this.add(finishedTicket);
 
-
+        finishedTicket.setForeground(Color.white);
+        finishedTicket.setFont(new Font("SansSerif Plain", Font.BOLD, 13));
 
 
         finishedTicket.revalidate();
@@ -235,13 +257,8 @@ public class BookingTool extends JPanel implements ActionListener {
             ui.removeThingsSeats2(selectedMovie, finalSelection);
         }
 
-
-        this.remove(listA);
-        this.remove(listB);
-        this.remove(listC);
-        this.remove(selectSeatsButton);
-
         removeBookingOptions();
+
 
 
     }
@@ -249,6 +266,10 @@ public class BookingTool extends JPanel implements ActionListener {
     //MODIFIES: this
     //EFFECTS: removes movie names and movie timings buttons
     public void removeBookingOptions() {
+        this.remove(listA);
+        this.remove(listB);
+        this.remove(listC);
+        this.remove(selectSeatsButton);
         this.remove(movieNames);
         this.remove(selectMovieButton);
         this.remove(movieTimings);
@@ -259,7 +280,7 @@ public class BookingTool extends JPanel implements ActionListener {
 
 
 
-    //EFFECTS: implemented method
+    //EFFECTS: implemented method from ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         //
