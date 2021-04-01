@@ -1,4 +1,5 @@
 package model;
+import exceptions.NegativeBalanceException;
 import model.Account;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,16 +24,29 @@ public class AccountTest {
     }
 
     @Test
-    public void testReload(){
-        // check that balance is INITIAL_BALANCE
+    public void testReloadNoException(){
         assertEquals(INITIAL_BALANCE, acc1.getBalance());
-        // add money
-        acc1.reload(100);
-        // check that new balance is equal to new money
+        try {
+            acc1.reload(100);
+        } catch (NegativeBalanceException e) {
+            fail("Shouldn't have thrown exception");
+        }
         assertEquals(200, acc1.getBalance());
     }
 
-    //////////////////////
+    @Test
+    public void testReloadExceptionThrown(){
+        assertEquals(INITIAL_BALANCE, acc1.getBalance());
+        try {
+            acc1.reload(-100);
+            fail("Negative exception should've been thrown");
+        } catch (NegativeBalanceException e) {
+            //
+        }
+        assertEquals(100, acc1.getBalance());
+    }
+
+
     @Test
     public void testBuyTicketOncOneSeat() {
         // check that balance is INITIAL_BALANCE
@@ -156,6 +170,7 @@ public class AccountTest {
         assertTrue(acc1.getTickets().contains(ticket3));
     }
 
+    @Test
     public void initialize(){
         List<String>  seats = new ArrayList<>();
         Ticket ticket1 = new Ticket("Sofa", seats, 2);

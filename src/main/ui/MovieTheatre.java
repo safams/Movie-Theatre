@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.NegativeBalanceException;
 import model.Movie;
 import model.Account;
 import model.Ticket;
@@ -128,7 +129,7 @@ public class MovieTheatre {
 
     //MODIFIES: this
     //EFFECTS: conducts an account balance reload
-    private void setReloadCommand() {
+    private void setReloadCommand() throws NegativeBalanceException {
         System.out.println("Current balance is: $" + userAcc.getBalance());
         System.out.println("Current movie ticket price/seat is: $" + userAcc.getMoviePrice());
         System.out.println("Enter dollar amount to load into your account: $ ");
@@ -294,7 +295,7 @@ public class MovieTheatre {
 
     //MODIFIES: this
     //EFFECTS: deletes user's selection of ticket from booked ticket list
-    private void setCancelCommand() {
+    private void setCancelCommand() throws NegativeBalanceException{
         System.out.println("Your current booked movie tickets are:");
         int index = 1;
         for (Ticket ticket : userAcc.getTickets()) {

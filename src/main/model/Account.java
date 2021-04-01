@@ -1,6 +1,7 @@
 package model;
 
 
+import exceptions.NegativeBalanceException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -32,7 +33,10 @@ public class Account implements Writable {
     //REQUIRES: money >= 0
     //MODIFIES: this
     //EFFECTS: adds dollar amount to Accounts current balance
-    public void reload(int money) {
+    public void reload(int money) throws NegativeBalanceException {
+        if (money < 0) {
+            throw new NegativeBalanceException();
+        }
         this.balance = balance + money;
 
     }

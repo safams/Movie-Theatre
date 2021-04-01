@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.NegativeBalanceException;
 import model.Account;
 import model.Movie;
 import model.Ticket;
@@ -226,7 +227,11 @@ public class MovieTheatreGUI {
     //MODIFIES: this
     //EFFECTS: adds "amount" into user's account balance
     public void reload(int amount) {
-        userAcc.reload(amount);
+        try {
+            userAcc.reload(amount);
+        } catch (NegativeBalanceException e) {
+            System.out.println("Error: Negative Balance");;
+        }
     }
 
     //EFFECTS: given the movie name, returns its corresponding movie object
@@ -392,14 +397,19 @@ public class MovieTheatreGUI {
     //EFFECTS: deletes ticket from user's list of tickets, and gives them a refund accordingly, and updates
     //         balance panel and ticket list panel
     public void cancelPurchase(int index) {
-        Ticket delete = userAcc.getTickets().get(index);
-        int numSeats = delete.getSeats().size();
-        int refund = numSeats * userAcc.getMoviePrice();
-        userAcc.deleteTicket(delete);
-        userAcc.reload(refund);
-        reAdd();
-        balanceTool.revalidate();
-        ticketListTool.revalidate();
+        try {
+            Ticket delete = userAcc.getTickets().get(index);
+            int numSeats = delete.getSeats().size();
+            int refund = numSeats * userAcc.getMoviePrice();
+            userAcc.deleteTicket(delete);
+            userAcc.reload(refund);
+            reAdd();
+            balanceTool.revalidate();
+            ticketListTool.revalidate();
+        } catch (NegativeBalanceException e) {
+            System.out.println("Error: Negative Balance");;
+        }
+
     }
 
 

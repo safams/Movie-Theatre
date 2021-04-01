@@ -34,3 +34,8 @@ interactive I can make this, where the options keep expanding as you choose a mo
 
 * *As a user*, I want to be able to **reload** my current booked movie tickets from file and add/remove tickets if desired
 
+## Phase 4: Task 2
+I chose to make my *Account* class more robust, by adding a *Negative Balance* exception when a negative amount
+is loaded into the account balance. This exception involves the *reload* method in the *Account* class.
+*
+
