@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Booking Tool panel to let user select a movie, timing, and seat, and displays purchased ticket
-public class BookingTool extends JPanel implements ActionListener {
+public class BookingTool extends JPanel {
 
     MovieTheatreGUI ui;
     List<Integer> timings;
@@ -68,6 +68,7 @@ public class BookingTool extends JPanel implements ActionListener {
 
     }
 
+    //EFFECTS: creates the background image for the panel, using an Icon
     public Image background() {
         bgicon = new ImageIcon("./data/curtainsRed.jpg");
         iconToImage = new IconToImage(bgicon);
@@ -75,6 +76,8 @@ public class BookingTool extends JPanel implements ActionListener {
         return image;
     }
 
+    //MODIFIES: this
+    //EFFECTS: paints the image "g" onto the background of the panel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
@@ -193,6 +196,8 @@ public class BookingTool extends JPanel implements ActionListener {
         selectimingg();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the 3 seat rows to the panel to allow user to pick seats
     public void selectimingg() {
         listA.setVisibleRowCount(3);
         listB.setVisibleRowCount(3);
@@ -278,13 +283,6 @@ public class BookingTool extends JPanel implements ActionListener {
 
     }
 
-
-
-    //EFFECTS: implemented method from ActionListener
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        //
-    }
 
 
 

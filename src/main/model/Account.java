@@ -30,9 +30,9 @@ public class Account implements Writable {
     }
 
 
-    //REQUIRES: money >= 0
     //MODIFIES: this
-    //EFFECTS: adds dollar amount to Accounts current balance
+    //EFFECTS: adds dollar amount to Accounts current balance if amount is positive,
+    //         else throws new NegativeBalanceExcetpion
     public void reload(int money) throws NegativeBalanceException {
         if (money < 0) {
             throw new NegativeBalanceException();
@@ -66,7 +66,6 @@ public class Account implements Writable {
         return tickets;
     }
 
-    //REQUIRES: list !=null
     //MODIFIES: this
     //EFFECTS: removes ticket from saved ticket list
     public void deleteTicket(Ticket ticket) {

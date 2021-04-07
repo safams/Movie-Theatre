@@ -39,3 +39,9 @@ I chose to make my *Account* class more robust, by adding a *Negative Balance* e
 is loaded into the account balance. This exception involves the *reload* method in the *Account* class.
 *
 
+## Phase 4: Task 3
+The design reflected in my UML diagram isn't the most effiecent, it has a lot of coupling and dependencies that aren't necessary.
+If I had more time, I would improve this and also improve cohesion by adding a few hierarchies, especially in my GUI. I would:
+
+* Add a hierarchy where all 4 of my panels implemented or extended the window they're contained in
+* Split up account into 2 classes, one to handle the balance and money, and one to handle the ticket list

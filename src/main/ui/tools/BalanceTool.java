@@ -11,7 +11,7 @@ import java.io.IOException;
 
 
 //BalanceTool panel to display user's account balance and allow them to reload
-public class BalanceTool extends JPanel implements ActionListener {
+public class BalanceTool extends JPanel {
 
 
     int balance;
@@ -57,23 +57,23 @@ public class BalanceTool extends JPanel implements ActionListener {
         input.setMaximumSize(
                 new Dimension(Integer.MAX_VALUE, input.getPreferredSize().height));
         reloadButton = new JButton("Reload");
-        reloadButton.addActionListener(this);
+        reloadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = input.getText();
+                int amount = Integer.parseInt(text);
+                ui.reload(amount);
+                balanceLabel.setText("Your Current Balance: $" + ui.getBalance());
+                balanceLabel.setForeground(Color.white);
+            }
+        });
         this.add(input);
         this.add(reloadButton);
     }
 
 
     //MODIFIES: this
-    //EFFECTS: creates an actionlistener that reloads user's desired amount when relaod button is clicked
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String text = input.getText();
-        int amount = Integer.parseInt(text);
-        ui.reload(amount);
-        balanceLabel.setText("Your Current Balance: $" + ui.getBalance());
-        balanceLabel.setForeground(Color.white);
-    }
-
+    //EFFECTS: creates a new JButton to save the user's balance and list of tickets to file
     public void save() {
         save = new JButton("Save To File");
         this.add(save);
@@ -89,6 +89,8 @@ public class BalanceTool extends JPanel implements ActionListener {
         });
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates a new JButton to load the user's balance and list of tickets from file
     public void loadButton() {
         load = new JButton("Load From File");
         this.add(load);
