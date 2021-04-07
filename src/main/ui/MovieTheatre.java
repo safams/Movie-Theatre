@@ -295,7 +295,7 @@ public class MovieTheatre {
 
     //MODIFIES: this
     //EFFECTS: deletes user's selection of ticket from booked ticket list
-    private void setCancelCommand() throws NegativeBalanceException{
+    private void setCancelCommand() throws NegativeBalanceException {
         System.out.println("Your current booked movie tickets are:");
         int index = 1;
         for (Ticket ticket : userAcc.getTickets()) {
